@@ -1,0 +1,179 @@
+/* Reset simple */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #F5D7E3;
+    /* rose clair */
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding-top: 50px;
+    align-items: center;
+}
+
+
+
+/* Container principal */
+.todo-header,
+.todo-list,
+.todo-input {
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.todo-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3B429F;
+    /* bleu foncé */
+    color: #fff;
+    height: 80px;
+    border-radius: 12px 12px 0 0;
+    padding: 15px 20px;
+}
+
+.todo-header h1 {
+    font-size: 1.5rem;
+}
+
+/* Filtre */
+.filter-container button {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+#filterOptions {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: #fff;
+    color: #333;
+    list-style: none;
+    padding: 5px 0;
+    width: 100px;
+    display: none;
+}
+
+#filterOptions li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#filterOptions li:hover,
+#filterOptions li.active {
+    background-color: #AA7DCE;
+    /* violet doux */
+    font-weight: bold;
+    color: #fff;
+}
+
+.todo-list {
+    background-color: #fff;
+    min-height: 150px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+/* Liste des tâches */
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.task-text {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.status-btn,
+.delete-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.status-btn {
+    margin-right: 5px;
+}
+
+/* Footer / Input */
+.todo-input {
+    display: flex;           /* flex horizontal */
+    flex-direction: row;     /* assure que c’est horizontal */
+    align-items: center;     /* centrer verticalement */
+    gap: 10px;               /* espace entre input et bouton */
+    background-color: #fff;
+    border-radius: 0 0 12px 12px;
+    padding: 10px 20px;
+    width: 100%;    /* ajouté padding pour mieux respirer */
+}
+
+#taskInput {
+    flex: 1; /* prend tout l’espace restant */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+#addTaskBtn {
+    flex: 0 0 auto; /* taille naturelle, ne pousse pas l’input */
+    background-color: #F4A5AE;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.2s;
+}
+
+#addTaskBtn:hover {
+    background-color: #AA7DCE;
+}
+
+/* Statut couleur */
+.status-btn[data-status="todo"] {
+    color: #3B429F;
+}
+
+/* bleu foncé */
+.status-btn[data-status="inProgress"] {
+    color: #AA7DCE;
+}
+
+/* violet doux */
+.status-btn[data-status="done"] {
+    color: #F4A5AE;
+}
+
+/* rose chaud */
+
+/* Légende des statuts */
+.legend {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #AAA;
+    /* gris léger */
+    margin-bottom: 10px;
+}

@@ -22,6 +22,7 @@ function addTask(text){
     }
 
     tasks.push(task);
+    saveTasks();
     renderTasks(tasks);
     taskInput.value = "";
 }
@@ -34,6 +35,7 @@ function deleteTask(id) {
     console.log("Tasks avant :", tasks);
     tasks = tasks.filter(task => task.id !== id);
  console.log("Tasks après :", tasks);
+ saveTasks();
     renderTasks(tasks);
 }
 
@@ -50,7 +52,7 @@ function toggleStatus(id){
     }else{
         task.status = "todo";
     }
-
+    saveTasks();
     renderTasks(tasks);
 }
 
@@ -61,7 +63,7 @@ function toggleCompleted(id){
     
     if(!task) return;
     task.completed = !task.completed;
-
+    saveTasks();
     renderTasks(tasks);
 
 }
@@ -151,17 +153,41 @@ taskInput.addEventListener('keydown', (e) => {
     }
 });
 
-filterBtn.addEventListener('click', () => {});
+filterBtn.addEventListener('click', () => {
+        filterOptions.style.display = filterOptions.style.display === "block" ? "none" : "block";
+
+});
 
 filterOptions.addEventListener("click", (e) => {
     const filter = e.target.dataset.filter;
-
     if (!filter) return;
+
+    // Supprimer active de tous
+    document.querySelectorAll("#filterOptions li").forEach(li => {
+        li.classList.remove("active");
+    });
+
+    // Ajouter active au cliqué
+    e.target.classList.add("active");
 
     filterTasks(filter);
 });
 
+//Sauvegarde dans le localStorage
+
+function saveTasks(){
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+
 // 5 Initialisation des data pour charger depuis le localStorage
 
-function init() {}
+function init() {
+    const storedTasks = localStorage.getItem("tasks");
+
+    if (storedTasks){
+        tasks = JSON.parse(storedTasks);
+        renderTasks(tasks);
+    }
+}
 init();
