@@ -28,27 +28,116 @@ function addTask(text){
 
 //Supprimer une tache
 
-function deleteTask(id){}
+function deleteTask(id) {
+
+    console.log("ID reçu :", id);
+    console.log("Tasks avant :", tasks);
+    tasks = tasks.filter(task => task.id !== id);
+ console.log("Tasks après :", tasks);
+    renderTasks(tasks);
+}
 
 //Changer le statut d'une tache
 
-function toggleStatus(id){}
+function toggleStatus(id){
+    const task = tasks.find(task => task.id === id);
+
+    if(!task) return;
+    if(task.status === "todo"){
+        task.status = "inProgress";
+    }else if(task.status === "inProgress") {
+        task.status = "done";
+    }else{
+        task.status = "todo";
+    }
+
+    renderTasks(tasks);
+}
 
 //Marquer une tache comme faite 
 
-function toggleCompleted(id){}
+function toggleCompleted(id){
+    const task = tasks.find(task => task.id === id);
+    
+    if(!task) return;
+    task.completed = !task.completed;
+
+    renderTasks(tasks);
+
+}
+
+
 
 //Filtrer les tâches
 
-function filterTasks (filter){}
+function filterTasks(filter) {
+
+    if (filter === "all") {
+        renderTasks(tasks);
+        return;
+    }
+
+    const filtered = tasks.filter(task => task.status === filter);
+
+    renderTasks(filtered);
+}
 
 //Afficher les tâches dans le DOM
 
 function renderTasks(tasksToRender){
     taskList.innerHTML = ""; // vide le conteneur 
     tasksToRender.forEach(task =>{
-        
+        const taskItem = document.createElement("div");
+        taskItem.classList.add("task-item");
+        // CHECKBOX
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.completed;
+        checkbox.addEventListener("change", () => toggleCompleted(task.id));
+
+        //TEXTE
+        const taskText = document.createElement("span");
+        taskText.classList.add("task-text");
+        taskText.textContent = task.text;
+        if (task.completed) taskText.style.textDecoration = "line-through";
+
+        //BOUTON STATUT
+        const statusBtn = document.createElement("button");
+        statusBtn.classList.add("status-btn");
+        statusBtn.textContent = getStatusIcon(task.status);
+        statusBtn.addEventListener("click", ()=> toggleStatus(task.id));
+
+        //BOUTON SUPPRIMÉ
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.textContent = "🗑️";
+        deleteBtn.addEventListener("click", () => deleteTask(task.id));
+
+        //Ajout des elements a la tache
+
+        taskItem.appendChild(checkbox);
+        taskItem.appendChild(taskText);
+        taskItem.appendChild(statusBtn);
+        taskItem.appendChild(deleteBtn);
+
+        //Ajout de la tache au DOM
+
+        taskList.appendChild(taskItem);
+
     })
+}
+
+//3.1 Fonction auxiliaires
+
+//Retourner l'icone correspondant au statut
+function getStatusIcon(status){
+    switch(status) {
+        case "todo": return "🟢";
+        case "inProgress": return "🟡";
+        case "done": return "🔵";
+        default: return "🟢"
+    }
 }
 
 // 4 Gestion des evenements 
@@ -61,8 +150,16 @@ taskInput.addEventListener('keydown', (e) => {
         addTask(taskInput.value);
     }
 });
+
 filterBtn.addEventListener('click', () => {});
-filterOptions.addEventListener('click', (e) => {});
+
+filterOptions.addEventListener("click", (e) => {
+    const filter = e.target.dataset.filter;
+
+    if (!filter) return;
+
+    filterTasks(filter);
+});
 
 // 5 Initialisation des data pour charger depuis le localStorage
 
