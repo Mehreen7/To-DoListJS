@@ -10,11 +10,11 @@ let tasks = []; // Pour chaque tâches on aura {id, text, statuts, completed}
 
 // 3 Fonction principales
 // Ajouter une tache
-function addTask(text){
+function addTask(text) {
     const trimmedText = text.trim();
-    if(trimmedText === "") return;
+    if (trimmedText === "") return;
 
-    const task= {
+    const task = {
         id: Date.now(),
         text: trimmedText,
         status: "todo",
@@ -34,22 +34,22 @@ function deleteTask(id) {
     console.log("ID reçu :", id);
     console.log("Tasks avant :", tasks);
     tasks = tasks.filter(task => task.id !== id);
- console.log("Tasks après :", tasks);
- saveTasks();
+    console.log("Tasks après :", tasks);
+    saveTasks();
     renderTasks(tasks);
 }
 
 //Changer le statut d'une tache
 
-function toggleStatus(id){
+function toggleStatus(id) {
     const task = tasks.find(task => task.id === id);
 
-    if(!task) return;
-    if(task.status === "todo"){
+    if (!task) return;
+    if (task.status === "todo") {
         task.status = "inProgress";
-    }else if(task.status === "inProgress") {
+    } else if (task.status === "inProgress") {
         task.status = "done";
-    }else{
+    } else {
         task.status = "todo";
     }
     saveTasks();
@@ -58,10 +58,10 @@ function toggleStatus(id){
 
 //Marquer une tache comme faite 
 
-function toggleCompleted(id){
+function toggleCompleted(id) {
     const task = tasks.find(task => task.id === id);
-    
-    if(!task) return;
+
+    if (!task) return;
     task.completed = !task.completed;
     saveTasks();
     renderTasks(tasks);
@@ -86,9 +86,9 @@ function filterTasks(filter) {
 
 //Afficher les tâches dans le DOM
 
-function renderTasks(tasksToRender){
+function renderTasks(tasksToRender) {
     taskList.innerHTML = ""; // vide le conteneur 
-    tasksToRender.forEach(task =>{
+    tasksToRender.forEach(task => {
         const taskItem = document.createElement("div");
         taskItem.classList.add("task-item");
         // CHECKBOX
@@ -106,8 +106,8 @@ function renderTasks(tasksToRender){
         //BOUTON STATUT
         const statusBtn = document.createElement("button");
         statusBtn.classList.add("status-btn");
-        statusBtn.textContent = getStatusIcon(task.status);
-        statusBtn.addEventListener("click", ()=> toggleStatus(task.id));
+        statusBtn.setAttribute("data-status", task.status);
+        statusBtn.addEventListener("click", () => toggleStatus(task.id));
 
         //BOUTON SUPPRIMÉ
 
@@ -130,31 +130,21 @@ function renderTasks(tasksToRender){
     })
 }
 
-//3.1 Fonction auxiliaires
 
-//Retourner l'icone correspondant au statut
-function getStatusIcon(status){
-    switch(status) {
-        case "todo": return "🟢";
-        case "inProgress": return "🟡";
-        case "done": return "🔵";
-        default: return "🟢"
-    }
-}
 
 // 4 Gestion des evenements 
 
 addTaskBtn.addEventListener('click', () => {
     addTask(taskInput.value);
-} );
+});
 taskInput.addEventListener('keydown', (e) => {
-    if(e.key === "Enter"){
+    if (e.key === "Enter") {
         addTask(taskInput.value);
     }
 });
 
 filterBtn.addEventListener('click', () => {
-        filterOptions.style.display = filterOptions.style.display === "block" ? "none" : "block";
+    filterOptions.style.display = filterOptions.style.display === "block" ? "none" : "block";
 
 });
 
@@ -167,15 +157,23 @@ filterOptions.addEventListener("click", (e) => {
         li.classList.remove("active");
     });
 
-    // Ajouter active au cliqué
+    // Ajout active au clique
     e.target.classList.add("active");
 
     filterTasks(filter);
+
+    filterOptions.style.display = "none";
+});
+
+document.addEventListener("click", (e) => {
+    if (!filterBtn.contains(e.target) && !filterOptions.contains(e.target)) {
+        filterOptions.style.display = "none";
+    }
 });
 
 //Sauvegarde dans le localStorage
 
-function saveTasks(){
+function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
@@ -185,7 +183,7 @@ function saveTasks(){
 function init() {
     const storedTasks = localStorage.getItem("tasks");
 
-    if (storedTasks){
+    if (storedTasks) {
         tasks = JSON.parse(storedTasks);
         renderTasks(tasks);
     }

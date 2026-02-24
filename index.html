@@ -17,8 +17,12 @@
                 <button id="filterBtn">Filtres ▼</button>
                 <ul id="filterOptions" class="hidden">
                     <li data-filter="all">Tout</li>
-                    <li data-filter="inProgress">En cours</li>
-                    <li data-filter="done">Finis</li>
+                    <li data-filter="inProgress">
+                        <span class="filter-icon icon-inProgress"></span>
+                        En cours</li>
+                    <li data-filter="done">
+                        <span class="filter-icon icon-done"></span>
+                        Finis</li>
                 </ul>
             </div>
         </header>
@@ -26,7 +30,24 @@
         <section id="taskList" class="todo-list">
 
         </section>
-
+        <div class="legend">
+            <p>
+                <span class="legend-item">
+                    <span class="legend-icon icon-todo"></span>
+                    : tâches à faire
+                </span>
+                <br>
+                <span class="legend-item">
+                    <span class="legend-icon icon-inProgress"></span>
+                    : tâches en cours
+                </span>
+                <br>
+                <span class="legend-item">
+                    <span class="legend-icon icon-done"></span>
+                    : tâches terminées
+                </span>
+            </p>
+        </div>
         <footer class="todo-input">
             <button id="addTaskBtn">➕</button>
             <input type="text" id="taskInput" placeholder="Nouvelle tâche...">

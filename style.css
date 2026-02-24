@@ -1,4 +1,12 @@
-/* Reset simple */
+:root{
+     --color-bg-body: #F5D7E3;
+     --color-header: #8361A9;
+     --color-btn-primary: #F4A5AE;
+     --color-btn-hover:#AA7DCE;
+     --color-txt-light:#fff;
+     --color-text-dark: #333;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +15,7 @@
 }
 
 body {
-    background-color: #F5D7E3;
+    background-color: var(--color-bg-body);
     /* rose clair */
     display: flex;
     justify-content: center;
@@ -35,9 +43,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #3B429F;
+    background-color: var(--color-header);
     /* bleu foncé */
-    color: #fff;
+    color: var(--color-txt-light);
     height: 80px;
     border-radius: 12px 12px 0 0;
     padding: 15px 20px;
@@ -49,26 +57,27 @@ body {
 
 /* Filtre */
 .filter-container button {
-    background: rgba(255, 255, 255, 0.3);
+    background: var(--color-btn-hover);
     border: none;
     padding: 5px 10px;
     border-radius: 6px;
     cursor: pointer;
-    color: #fff;
+    color: var(--color-txt-light);
     display: flex;
     flex-direction: column;
     width: 400px;
+    font-size: medium;
 }
 
 #filterOptions {
     position: absolute;
     top: 60px;
     right: 20px;
-    background: #fff;
+    background: var(--color-txt-light);
     color: #333;
     list-style: none;
     padding: 5px 0;
-    width: 100px;
+    width: 120px;
     display: none;
 }
 
@@ -82,12 +91,23 @@ body {
     background-color: #AA7DCE;
     /* violet doux */
     font-weight: bold;
-    color: #fff;
+    color: var(--color-txt-light);
+}
+
+.filter-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 6px;
 }
 
 .todo-list {
-    background-color: #fff;
-    min-height: 150px;
+    background-color: var(--color-txt-light);
+    min-height: 400px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 /* Liste des tâches */
@@ -138,7 +158,7 @@ body {
 
 #addTaskBtn {
     flex: 0 0 auto; /* taille naturelle, ne pousse pas l’input */
-    background-color: #F4A5AE;
+    background-color: var(--color-btn-primary);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -149,31 +169,60 @@ body {
 }
 
 #addTaskBtn:hover {
-    background-color: #AA7DCE;
+    background-color: var(--color-btn-hover);
 }
 
 /* Statut couleur */
+.status-btn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
 .status-btn[data-status="todo"] {
-    color: #3B429F;
+    background-image: url("icon/todo.png");
 }
 
-/* bleu foncé */
 .status-btn[data-status="inProgress"] {
-    color: #AA7DCE;
+    background-image: url("icon/inProgress.png");
 }
 
-/* violet doux */
 .status-btn[data-status="done"] {
-    color: #F4A5AE;
+    background-image: url("icon/done.png");
 }
-
-/* rose chaud */
 
 /* Légende des statuts */
 .legend {
-    text-align: center;
+    text-align: left;
     font-size: 0.9rem;
     color: #AAA;
-    /* gris léger */
-    margin-bottom: 10px;
+    background-color: var(--color-txt-light);
+}
+.legend-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.icon-todo {
+    background-image: url("icon/todo.png");
+}
+
+.icon-inProgress {
+    background-image: url("icon/inProgress.png");
+}
+
+.icon-done {
+    background-image: url("icon/done.png");
 }
